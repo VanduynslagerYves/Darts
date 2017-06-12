@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -10,8 +7,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Darts.Data;
-using Darts.Models;
 using Darts.Services;
+using Microsoft.AspNetCore.Http;
+using Darts.Models;
+using Darts.Models.Domain;
+using Darts.Data.Repositories;
 
 namespace Darts
 {
@@ -43,19 +43,36 @@ namespace Darts
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Darts/Index");
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+                options.AddPolicy("Speler", policy => policy.RequireClaim(ClaimTypes.Role, "speler"));
+            });
+
+            services.AddSession();
 
             services.AddMvc();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            //services.AddScoped<IBrewerRepository, BrewerRepository>();
+            //services.AddScoped<ILocationRepository, LocationRepository>();
+            //services.AddScoped<IBeerRepository, BeerRepository>();
+            services.AddScoped<ISpelerRepository, SpelerRepository>();
+            //services.AddScoped<CartSessionFilter>();
+            //services.AddScoped<CustomerFilter>();
+            services.AddScoped<DartsDataInitializer>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DartsDataInitializer dataInit)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -72,7 +89,8 @@ namespace Darts
             }
 
             app.UseStaticFiles();
-
+            app.UseStatusCodePages();
+            app.UseSession();
             app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
@@ -81,8 +99,10 @@ namespace Darts
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Darts}/{action=Index}/{id?}");
             });
+
+            dataInit.InitializeData().Wait();
         }
     }
 }

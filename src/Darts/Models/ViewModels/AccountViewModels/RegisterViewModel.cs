@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Darts.Models.AccountViewModels
+namespace Darts.Models.ViewModels.AccountViewModels
 {
     public class RegisterViewModel
     {
@@ -23,5 +19,20 @@ namespace Darts.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "First name")]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string Street { get; set; }
+
+        [Display(Name = "Location")]
+        public string PostalCode { get; set; }
     }
 }

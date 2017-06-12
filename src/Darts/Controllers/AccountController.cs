@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -8,9 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Darts.Models;
-using Darts.Models.AccountViewModels;
+using Darts.Models.ViewModels.AccountViewModels;
 using Darts.Services;
+using Darts.Models.Domain;
 
 namespace Darts.Controllers
 {
@@ -22,19 +20,23 @@ namespace Darts.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly ISpelerRepository _spelerRepository;
+        //private readonly ILocationRepository _locationRepository;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ISpelerRepository spelerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _spelerRepository = spelerRepository;
         }
 
         //
@@ -92,6 +94,11 @@ namespace Darts.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            //ViewData["Locations"] = new SelectList(
+            //  _locationRepository.GetAll().OrderBy(l => l.Name),
+            //  nameof(Location.PostalCode),
+            //  nameof(Location.Name),
+            //  null);
             return View();
         }
 
@@ -108,7 +115,19 @@ namespace Darts.Controllers
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
+                    result = await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "speler"));
+                if (result.Succeeded)
                 {
+                    var speler = new Speler
+                    {
+                        Email = model.Email,
+                        Naam = model.Name,
+                        Voornaam = model.FirstName
+                        //Street = model.Street,
+                        //Location = _locationRepository.GetBy(model.PostalCode)
+                    };
+                    _spelerRepository.Add(speler);
+                    _spelerRepository.SaveChanges();
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

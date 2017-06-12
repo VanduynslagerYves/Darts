@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Darts.Models;
-using Darts.Models.ManageViewModels;
+using Darts.Models.ViewModels.ManageViewModels;
 using Darts.Services;
+using Darts.Models.Domain;
 
 namespace Darts.Controllers
 {
