@@ -1,55 +1,34 @@
 ﻿@model EditViewModel
 
 @{
-    ViewData["Title"] = Model.BrewerId == 0 ? "Create brewer" : "Edit brewer";
-    var action = Model.BrewerId == 0 ? "Create" : "Edit";
+    ViewData["Title"] = Model.SpelerId == 0 ? "Nieuwe speler" : "Wijzig speler";
+    var action = Model.SpelerId == 0 ? "Create" : "Edit";
 }
 
 <h2>@ViewData["Title"]</h2>
 
 <form asp-action="@action" method="post">
     <div asp-validation-summary="ModelOnly"></div>
-    <input asp-for="BrewerId" />
+    <input asp-for="SpelerId" />
     <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
+        <label asp-for="Naam"></label>
+        <input asp-for="Naam" class="form-control" />
+        <span asp-validation-for="Naam" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Street"></label>
-        <input asp-for="Street" class="form-control" />
-        <span asp-validation-for="Street" class="text-danger"></span>
+        <label asp-for="Voornaam"></label>
+        <input asp-for="Voornaam" class="form-control" />
+        <span asp-validation-for="Voornaam" class="text-danger"></span>
     </div>
+    
     <div class="form-group">
-        <label asp-for="PostalCode"></label>
-        <select asp-for="PostalCode" asp-items="@(ViewData["Locations"] as SelectList)" class="form-control">
-            <option value="">-- select location --</option>
-        </select>
-        <span asp-validation-for="PostalCode" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ContactEmail"></label>
-        <input asp-for="ContactEmail" class="form-control" />
-        <span asp-validation-for="ContactEmail" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DateEstablished"></label>
-        <input asp-for="DateEstablished" class="form-control" />
-        <span asp-validation-for="DateEstablished" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Turnover"></label>
-        <input asp-for="Turnover" class="form-control" />
-        <span asp-validation-for="Turnover" class="text-danger"></span>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div>
-        <button class="btn btn-primary" type="submit">Save</button>
-        <a asp-action="Index" class="btn btn-default">Cancel</a>
+        <button class="btn btn-primary" type="submit">Opslaan</button>
+        <a asp-action="Index" class="btn btn-default">Annuleren</a>
     </div>
 </form>
 

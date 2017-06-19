@@ -6,18 +6,19 @@ namespace Darts.Models.Domain
     public class Speler
     {
         #region Properties
-        public int SpelerId { get; set; }
+        public int Id { get; set; }
         public string Email { get; set; }
         public string Naam { get; set; }
         public string Voornaam { get; set; }
-        public int AantalGespeeld => Resultaten.Count;
-        public ICollection<Resultaat> Resultaten { get; set; }
+        public int AantalGespeeld => SpelerWedstrijd.Count;
+        public virtual ICollection<SpelerWedstrijd> SpelerWedstrijd { get; set; }
         public int TotaalPunten => BerekenTotaal();
+        public int VerlorenPunten => BerekenVerlorenPunten();
         public DateTime DatumToegevoegd { get; set; }
         #endregion
 
         #region Constructors
-        public Speler(string email, string naam, string voornaam):this()
+        public Speler(string email, string voornaam, string naam) : this()
         {
             Email = email;
             Naam = naam;
@@ -26,7 +27,8 @@ namespace Darts.Models.Domain
 
         public Speler()
         {
-            Resultaten = new List<Resultaat>();
+            //Wedstrijden = new List<Wedstrijd>();
+            SpelerWedstrijd = new List<SpelerWedstrijd>();
             DatumToegevoegd = DateTime.Now;
         }
         #endregion
@@ -34,17 +36,33 @@ namespace Darts.Models.Domain
         private int BerekenTotaal()
         {
             int totaal = 0;
-            foreach(Resultaat r in Resultaten)
+            foreach(SpelerWedstrijd sw in SpelerWedstrijd)
             {
-                totaal += r.Punten;
+                if(sw.SpelerId == this.Id)
+                {
+                    totaal += sw.PuntenGewonnen;
+                }
             }
             return totaal;
         }
 
-        public void AddResultaat(DateTime speelDatum, int punten)
+        private int BerekenVerlorenPunten()
         {
-            Resultaten.Add(new Resultaat(speelDatum, punten));
+            int totaal = 0;
+            foreach (SpelerWedstrijd sw in SpelerWedstrijd)
+            {
+                if (sw.SpelerId == this.Id)
+                {
+                    totaal += sw.PuntenVerloren;
+                }
+            }
+            return totaal;
         }
+
+        //public void AddWedstrijd(Wedstrijd w)
+        //{ 
+        //    Wedstrijden.Add(w);
+        //}
         #endregion
     }
 }

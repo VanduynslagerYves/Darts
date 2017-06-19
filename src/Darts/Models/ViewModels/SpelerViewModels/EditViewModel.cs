@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Darts.Models.Domain;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Darts.Models.ViewModels.BrewerViewModels
+namespace Darts.Models.ViewModels.SpelerViewModels
 {
     public class EditViewModel
     {
@@ -44,7 +44,7 @@ namespace Darts.Models.ViewModels.BrewerViewModels
         [Display(Name = "E-mailadres")]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Dit is geen geldig e-mailadres")]
-        public string ContactEmail
+        public string Email
         {
             get; set;
         }
@@ -61,9 +61,10 @@ namespace Darts.Models.ViewModels.BrewerViewModels
 
         public EditViewModel(Speler speler) : this()
         {
-            SpelerId = speler.SpelerId;
+            SpelerId = speler.Id;
+            Voornaam = speler.Voornaam;
             Naam = speler.Naam;
-            ContactEmail = speler.Email;
+            Email = speler.Email;
         }
     }
 }

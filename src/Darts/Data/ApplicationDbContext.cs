@@ -13,29 +13,28 @@ namespace Darts.Data
         {
         }
 
-        //public DbSet<Brewer> Brewers { get; set; }
-        //public DbSet<Beer> Beers { get; set; }
-        public DbSet<Resultaat> Resultaten { get; set; }
+        public DbSet<Wedstrijd> Wedstrijden { get; set; }
         public DbSet<Speler> Spelers { get; set; }
+        public DbSet<SpelerWedstrijd> SpelerWedstrijden { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<Brewer>(MapBrewer);
-            //modelBuilder.Entity<Beer>(MapBeer);
             modelBuilder.Entity<Speler>(MapSpeler);
-            modelBuilder.Entity<Resultaat>(MapResultaat);
-            //modelBuilder.Entity<Order>(MapOrder);
-            //modelBuilder.Entity<OrderLine>(MapOrderLine);
+            modelBuilder.Entity<Wedstrijd>(MapWedstrijd);
+            modelBuilder.Entity<SpelerWedstrijd>(MapSpelerWedstrijd);
         }
 
-        //public static void MapOrder(EntityTypeBuilder<Order> o) {
-        //    o.ToTable("Order");
-        //    o.Property(t => t.Street).IsRequired().HasMaxLength(100);
-        //    o.HasMany(t => t.OrderLines).WithOne().HasForeignKey(t => t.OrderId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-        //    o.HasOne(c => c.Location).WithMany().IsRequired().OnDelete(DeleteBehavior.Restrict);
-        //}
+        public static void MapSpelerWedstrijd(EntityTypeBuilder<SpelerWedstrijd> sw)
+        {
+            sw.HasKey(t => new { t.SpelerId, t.WedstrijdId });
 
+            sw.HasOne(t => t.Speler) //naar categorie (1)
+                .WithMany(t => t.SpelerWedstrijd); //categorie kent producten (N)
+
+            sw.HasOne(t => t.Wedstrijd) //naar product (1)
+                .WithMany(t => t.SpelerWedstrijd); //van product naar categorieproduct (product kent categorie niet) (N)
+        }
         public static void MapSpeler(EntityTypeBuilder<Speler> c)
         {
             c.ToTable("Speler");
@@ -49,10 +48,11 @@ namespace Darts.Data
                 .IsRequired()
                 .HasMaxLength(100);
 
-            c.HasMany(t => t.Resultaten)
+            c.HasMany(t => t.SpelerWedstrijd)
                 .WithOne()
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(t => t.SpelerId);
+
         }
 
         //public static void MapOrderLine(EntityTypeBuilder<OrderLine> ol)
@@ -66,20 +66,32 @@ namespace Darts.Data
         //    ol.HasOne(o => o.Product).WithMany().IsRequired().HasForeignKey(o => o.ProductId).OnDelete(DeleteBehavior.Restrict);
         //}
 
-        private static void MapResultaat(EntityTypeBuilder<Resultaat> m)
+        private static void MapWedstrijd(EntityTypeBuilder<Wedstrijd> m)
         {
             //Table name
-            m.ToTable("Resultaat");
+            m.ToTable("Wedstrijd");
 
             //Primary Key
-            m.HasKey(t => t.ResultaatId);
+            //m.HasKey(t => t.WedstrijdId);
 
             //Properties
-            m.Property(t => t.Punten)
-                .IsRequired()
-                .HasMaxLength(50);
-            m.Property(t => t.SpeelDatum)
+            m.Property(t => t.DatumGespeeld)
                 .IsRequired();
+
+            //Relations
+            m.HasMany(t => t.SpelerWedstrijd)
+                .WithOne()
+                .IsRequired()
+                .HasForeignKey(t => t.WedstrijdId);
+            //m.HasOne(t => t.Speler1)
+            //    .WithMany()
+            //    .IsRequired()
+            //    .OnDelete(DeleteBehavior.Restrict);
+            //m.HasOne(t => t.Speler2)
+            //    .WithMany()
+            //    .IsRequired()
+            //    .OnDelete(DeleteBehavior.Restrict);
+
         }
 
 

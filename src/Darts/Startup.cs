@@ -61,10 +61,9 @@ namespace Darts
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
-            //services.AddScoped<IBrewerRepository, BrewerRepository>();
-            //services.AddScoped<ILocationRepository, LocationRepository>();
-            //services.AddScoped<IBeerRepository, BeerRepository>();
+            services.AddScoped<IWedstrijdRepository, WedstrijdRepository>();
             services.AddScoped<ISpelerRepository, SpelerRepository>();
+            services.AddScoped<ISpelerWedstrijdRepository, SpelerWedstrijdRepository>();
             //services.AddScoped<CartSessionFilter>();
             //services.AddScoped<CustomerFilter>();
             services.AddScoped<DartsDataInitializer>();

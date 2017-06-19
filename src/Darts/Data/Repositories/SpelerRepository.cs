@@ -18,11 +18,13 @@ namespace Darts.Data.Repositories
         }
         public Speler GetById(int id)
         {
-            return _spelers.Include(s => s.Resultaten).SingleOrDefault(s => s.SpelerId == id);
+            return _spelers.Include(s => s.SpelerWedstrijd).SingleOrDefault(s => s.Id == id);
+            //return _spelers.Include(s => s.Wedstrijden).SingleOrDefault(s => s.Id == id);
         }
         public Speler GetBy(string email)
         {
-            return _spelers.Include(s => s.Resultaten).SingleOrDefault(s => s.Email == email);
+            return _spelers.Include(s => s.SpelerWedstrijd).SingleOrDefault(s => s.Email == email);
+            //return _spelers.Include(s => s.Wedstrijden).SingleOrDefault(s => s.Email == email);
         }
         //public Speler GetBy(string email)
         //{
@@ -45,7 +47,13 @@ namespace Darts.Data.Repositories
 
         public ICollection<Speler> GetAll()
         {
-            return _spelers.Include(s => s.Resultaten).OrderByDescending(s => s.TotaalPunten).ToList();
+            return _spelers
+                .Include(s => s.SpelerWedstrijd)
+                //.OrderByDescending(s => s.TotaalPunten)
+                .ToList();
+            //return _spelers
+            //    .Include(s => s.Wedstrijden)
+            //    .OrderByDescending(s => s.TotaalPunten).ToList();
         }
     }
 }

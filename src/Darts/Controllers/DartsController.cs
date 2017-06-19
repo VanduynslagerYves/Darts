@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Darts.Models.ViewModels.BrewerViewModels;
+using Darts.Models.ViewModels.SpelerViewModels;
 
 namespace Darts.Controllers
 {
@@ -13,11 +13,16 @@ namespace Darts.Controllers
     public class DartsController : Controller
     {
         private readonly ISpelerRepository _spelerRepository;
-        //private readonly ILocationRepository _locationRepository;
+        private readonly IWedstrijdRepository _wedstrijdRepository;
+        private readonly ISpelerWedstrijdRepository _spelerWedstrijdRepository;
 
-        public DartsController(ISpelerRepository spelerRepository)
+        public DartsController(ISpelerRepository spelerRepository,
+            IWedstrijdRepository wedstrijdRepository,
+            ISpelerWedstrijdRepository spelerWedstrijdRepository)
         {
             _spelerRepository = spelerRepository;
+            _wedstrijdRepository = wedstrijdRepository;
+            _spelerWedstrijdRepository = spelerWedstrijdRepository;
         }
 
         [AllowAnonymous]
@@ -26,10 +31,17 @@ namespace Darts.Controllers
         public IActionResult Index()
         {
             IEnumerable<Speler> spelers = _spelerRepository.GetAll();
-            //ViewData["TotalTurnover"] = brewers.Sum(b => b.Turnover);
             return View(spelers);
         }
 
+        [AllowAnonymous]
+        public IActionResult Detail(int id)
+        {
+            Speler s = _spelerRepository.GetById(id);
+            ViewData["Speler"] = s.Voornaam + " " + s.Naam;
+            IEnumerable<SpelerWedstrijd> wedstrijden = _spelerWedstrijdRepository.GetBySpelerId(id);
+            return View(wedstrijden);
+        }
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -63,6 +75,7 @@ namespace Darts.Controllers
             return View(spelerEditViewModel);
         }
 
+        [HttpGet]
         public IActionResult Create()
         {
             //ViewData["Locations"] = GetLocationsAsSelectList(null);
@@ -133,7 +146,7 @@ namespace Darts.Controllers
         private void MapSpelerEditViewModelToSpeler(EditViewModel spelerEditViewModel, Speler speler)
         {
             speler.Naam = spelerEditViewModel.Naam;
-            speler.Email = spelerEditViewModel.ContactEmail;
+            speler.Email = spelerEditViewModel.Email;
             speler.Voornaam = spelerEditViewModel.Voornaam;
         }
     }
