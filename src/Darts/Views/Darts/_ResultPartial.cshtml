@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Darts.Models.Domain.SpelerWedstrijd>
+
+<table class="table table-striped table-condensed table-bordered">
+    <tr>
+        <th>Datum gespeeld</th>
+        <th>Punten gewonnen</th>
+        <th>Punten verloren</th>
+        <th>Gespeeld tegen</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @(item.Wedstrijd.DatumGespeeld.Date.ToString("d") ?? "-")
+            </td>
+            <td>
+                @item.PuntenGewonnen
+            </td>
+            <td>
+                @item.PuntenVerloren
+            </td>
+            <td>
+                @item.Tegenstander
+            </td>
+        </tr>
+    }
+</table>

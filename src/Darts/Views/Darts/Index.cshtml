@@ -38,7 +38,7 @@
             <td class="text-right">
                 @(item.DatumToegevoegd.Date.ToString("d") ?? "-")
             </td>
-            <td>
+            <td id="@item.Id">
                 <a asp-controller="Darts" asp-action="Detail" asp-route-id="@item.Id">Detail</a> |
                 <a asp-controller="Darts" asp-action="Edit" asp-route-id="@item.Id">Wijzig</a> |
                 <a asp-controller="Darts" asp-action="Delete" asp-route-id="@item.Id">Verwijder</a>
@@ -46,3 +46,8 @@
         </tr>
     }
 </table>
+
+@section scripts
+{
+    <script src="~/js/partialview.js"></script>
+    }

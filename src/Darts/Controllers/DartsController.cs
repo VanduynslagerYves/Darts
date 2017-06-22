@@ -37,10 +37,10 @@ namespace Darts.Controllers
         [AllowAnonymous]
         public IActionResult Detail(int id)
         {
-            Speler s = _spelerRepository.GetById(id);
-            ViewData["Speler"] = s.Voornaam + " " + s.Naam;
+            //Speler s = _spelerRepository.GetById(id);
+            //ViewData["Speler"] = s.Voornaam + " " + s.Naam;
             IEnumerable<SpelerWedstrijd> wedstrijden = _spelerWedstrijdRepository.GetBySpelerId(id);
-            return View(wedstrijden);
+            return PartialView("_ResultPartial",wedstrijden);
         }
         [HttpGet]
         public IActionResult Edit(int id)
