@@ -40,7 +40,8 @@ namespace Darts.Controllers
             //Speler s = _spelerRepository.GetById(id);
             //ViewData["Speler"] = s.Voornaam + " " + s.Naam;
             IEnumerable<SpelerWedstrijd> wedstrijden = _spelerWedstrijdRepository.GetBySpelerId(id);
-            return PartialView("_ResultPartial",wedstrijden);
+            return Json(wedstrijden);
+            //return PartialView(wedstrijden);
         }
         [HttpGet]
         public IActionResult Edit(int id)
