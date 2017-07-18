@@ -27,6 +27,7 @@ namespace Darts.Data
                 ApplicationUser user = new ApplicationUser { UserName = eMailAddress, Email = eMailAddress };
                 await _userManager.CreateAsync(user, "P@ssword1");
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "admin"));
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "speler"));
 
                 eMailAddress = "jan@hogent.be";
                 user = new ApplicationUser { UserName = eMailAddress, Email = eMailAddress };

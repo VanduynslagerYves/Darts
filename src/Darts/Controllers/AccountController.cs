@@ -153,7 +153,7 @@ namespace Darts.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
-            return RedirectToAction(nameof(DartsController.Index), "Home");
+            return RedirectToAction(nameof(DartsController.Index), "Darts/Index");
         }
 
         //

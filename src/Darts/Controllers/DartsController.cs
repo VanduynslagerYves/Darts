@@ -9,7 +9,7 @@ using Darts.Models.ViewModels.SpelerViewModels;
 
 namespace Darts.Controllers
 {
-    [Authorize(Policy = "AdminOnly")]
+    [Authorize(Policy = "Speler")]
     public class DartsController : Controller
     {
         private readonly ISpelerRepository _spelerRepository;
@@ -25,16 +25,13 @@ namespace Darts.Controllers
             _spelerWedstrijdRepository = spelerWedstrijdRepository;
         }
 
-        [AllowAnonymous]
-        //[Authorize(Policy ="AdminOnly")]
-        //[Authorize(Policy ="Speler")]
+        //volgende overschrijven auth van class level
         public IActionResult Index()
         {
             IEnumerable<Speler> spelers = _spelerRepository.GetAll();
             return View(spelers);
         }
 
-        [AllowAnonymous]
         public IActionResult Detail(int id)
         {
             Speler s = _spelerRepository.GetById(id);
@@ -43,6 +40,7 @@ namespace Darts.Controllers
             return View(wedstrijden);
         }
         [HttpGet]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Edit(int id)
         {
             Speler speler = _spelerRepository.GetById(id);
@@ -54,6 +52,7 @@ namespace Darts.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Edit(EditViewModel spelerEditViewModel)
         {
             if (ModelState.IsValid)
@@ -76,6 +75,7 @@ namespace Darts.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create()
         {
             //ViewData["Locations"] = GetLocationsAsSelectList(null);
@@ -84,6 +84,7 @@ namespace Darts.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Create(EditViewModel spelerEditViewModel)
         {
             if (ModelState.IsValid)
@@ -106,6 +107,7 @@ namespace Darts.Controllers
             return View(nameof(Edit), spelerEditViewModel);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult Delete(int id)
         {
             Speler speler = _spelerRepository.GetById(id);
@@ -117,6 +119,7 @@ namespace Darts.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult DeleteConfirmed(int id)
         {
             Speler speler = null;

@@ -45,6 +45,8 @@ namespace Darts
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Darts/Index");
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -64,8 +66,6 @@ namespace Darts
             services.AddScoped<IWedstrijdRepository, WedstrijdRepository>();
             services.AddScoped<ISpelerRepository, SpelerRepository>();
             services.AddScoped<ISpelerWedstrijdRepository, SpelerWedstrijdRepository>();
-            //services.AddScoped<CartSessionFilter>();
-            //services.AddScoped<CustomerFilter>();
             services.AddScoped<DartsDataInitializer>();
 
         }
