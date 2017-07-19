@@ -50,6 +50,46 @@ namespace Darts.Controllers
             return View(new EditViewModel(speler));
         }
 
+        [HttpGet]
+        [Authorize(Policy ="AdminOnly")]
+        public IActionResult NieuweWedstrijd()
+        {
+            ViewData["Spelers"] = GetSpelersAsSelectList();
+            return View(new WedstrijdViewModel());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy ="AdminOnly")]
+        public IActionResult NieuweWedstrijd(WedstrijdViewModel spelerwedstrijd)
+        {
+            if (ModelState.IsValid && (spelerwedstrijd.IdSpeler1 != spelerwedstrijd.IdSpeler2))
+            {
+                try
+                {
+                    Speler speler1 = _spelerRepository.GetById(spelerwedstrijd.IdSpeler1);
+                    Speler speler2 = _spelerRepository.GetById(spelerwedstrijd.IdSpeler2);
+                    Wedstrijd w = new Wedstrijd(spelerwedstrijd.DatumGespeeld);
+
+                    SpelerWedstrijd sw1 = new SpelerWedstrijd(speler1, w, spelerwedstrijd.PuntenGewonnen, speler2.Voornaam + " " + speler2.Naam);
+                    SpelerWedstrijd sw2 = new SpelerWedstrijd(speler2, w, spelerwedstrijd.PuntenVerloren, speler1.Voornaam + " " + speler1.Naam);
+
+                    _spelerWedstrijdRepository.Add(sw1);
+                    _spelerWedstrijdRepository.Add(sw2);
+                    _spelerWedstrijdRepository.SaveChanges();
+
+                    TempData["message"] = $"Nieuwe wedstrijd tussen {speler1.VolledigeNaam} en {speler2.VolledigeNaam} werd met succes toegevoegd!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("", e.Message);
+                }
+            }
+            ViewData["Spelers"] = GetSpelersAsSelectList();
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "AdminOnly")]
@@ -137,6 +177,11 @@ namespace Darts.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Spelers()
+        {
+            return View(_spelerRepository.GetAll());
+        }
+
         //private SelectList GetLocationsAsSelectList(string postalCode)
         //{
         //    return new SelectList(
@@ -145,6 +190,12 @@ namespace Darts.Controllers
         //        nameof(Location.Name),
         //        postalCode);
         //}
+        private SelectList GetSpelersAsSelectList()
+        {
+            return new SelectList(_spelerRepository.GetAll().OrderBy(s => s.Naam).ThenBy(s => s.Voornaam),
+                nameof(Speler.Id),
+                nameof(Speler.VolledigeNaam));
+        }
 
         private void MapSpelerEditViewModelToSpeler(EditViewModel spelerEditViewModel, Speler speler)
         {

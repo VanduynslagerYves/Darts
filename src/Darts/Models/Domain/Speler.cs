@@ -10,6 +10,7 @@ namespace Darts.Models.Domain
         public string Email { get; set; }
         public string Naam { get; set; }
         public string Voornaam { get; set; }
+        public string VolledigeNaam => Naam + " " + Voornaam;
         public int AantalGespeeld => SpelerWedstrijd.Count;
         public virtual ICollection<SpelerWedstrijd> SpelerWedstrijd { get; set; }
         public int TotaalPunten => BerekenTotaal();

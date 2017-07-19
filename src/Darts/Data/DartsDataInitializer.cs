@@ -47,7 +47,7 @@ namespace Darts.Data
                 var speler3 = new Speler("reetman@telenet.be", "Jantje", "Smit");
 
                 Wedstrijd w = new Wedstrijd(DateTime.Now);
-                SpelerWedstrijd sw1 = new SpelerWedstrijd(speler1, w, 3, speler2.Voornaam + " " +speler2.Naam);
+                SpelerWedstrijd sw1 = new SpelerWedstrijd(speler1, w, 3, speler2.Voornaam + " " + speler2.Naam);
                 SpelerWedstrijd sw2 = new SpelerWedstrijd(speler2, w, 0, speler1.Voornaam + " " + speler1.Naam);
 
                 w = new Wedstrijd(new DateTime(2010,1,12));

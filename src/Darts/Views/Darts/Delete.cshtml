@@ -1,15 +1,15 @@
 ﻿@{
-    ViewData["Title"] = "Brewers";
+    ViewData["Title"] ="Verwijderen van speler";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2>@ViewData["Title"] @ViewData["Name"]</h2>
 
 <h4>
-    Please confirm you want to delete brewer @ViewData["Name"]...
+    Ben je zeker dat je @ViewData["Name"] wilt verwijderen?
 </h4>
 <form asp-action="Delete" method="post">
     <div>
-        <button class="btn btn-primary" type="submit">Delete</button>
-        <a asp-action="Index" class="btn btn-default">Cancel</a>
+        <button class="btn btn-primary" type="submit">Opslaan</button>
+        <a asp-action="Index" class="btn btn-default">Annuleren</a>
     </div>
 </form>

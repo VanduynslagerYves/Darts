@@ -1,0 +1,43 @@
+﻿@model WedstrijdViewModel
+
+@{
+    ViewData["Title"] = "Nieuwe Wedstrijd";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="NieuweWedstrijd" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <label asp-for="DatumGespeeld"></label>
+        <input asp-for="DatumGespeeld" class="form-control" />
+        <span asp-validation-for="DatumGespeeld" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="IdSpeler1"></label>
+        <select asp-for="IdSpeler1" asp-items="@(ViewData["Spelers"] as SelectList)" class="form-control">
+            <option value="">-- Kies een speler --</option>
+        </select>
+        <span asp-validation-for="IdSpeler2" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="IdSpeler2"></label>
+        <select asp-for="IdSpeler2" asp-items="@(ViewData["Spelers"] as SelectList)" class="form-control">
+            <option value="">-- Kies een speler --</option>
+        </select>
+        <span asp-validation-for="IdSpeler2" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="PuntenGewonnen"></label>
+        <input asp-for="PuntenGewonnen" class="form-control"/>
+        <span asp-validation-for="PuntenGewonnen" class="text-danger"></span>
+    </div>
+    <div>
+        <button class="btn btn-primary" type="submit">Opslaan</button>
+        <a asp-action="Index" class="btn btn-default">Annuleren</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
