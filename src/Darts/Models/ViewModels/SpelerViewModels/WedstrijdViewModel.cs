@@ -9,7 +9,7 @@ namespace Darts.Models.ViewModels.SpelerViewModels
 {
     public class WedstrijdViewModel
     {
-        [Display(Name = "Punten van speler die gewonnen heeft")]
+        [Display(Name = "Punten van Speler1")]
         [Range(0, 3, ErrorMessage = "{0} moeten tussen {1} en {2} liggen!")]
         public int PuntenGewonnen { get; set; }
         public int PuntenVerloren => 3 - PuntenGewonnen;

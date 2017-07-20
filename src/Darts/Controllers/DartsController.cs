@@ -51,7 +51,7 @@ namespace Darts.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy ="AdminOnly")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult NieuweWedstrijd()
         {
             ViewData["Spelers"] = GetSpelersAsSelectList();
@@ -60,7 +60,7 @@ namespace Darts.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Policy ="AdminOnly")]
+        [Authorize(Policy = "AdminOnly")]
         public IActionResult NieuweWedstrijd(WedstrijdViewModel spelerwedstrijd)
         {
             if (ModelState.IsValid && (spelerwedstrijd.IdSpeler1 != spelerwedstrijd.IdSpeler2))

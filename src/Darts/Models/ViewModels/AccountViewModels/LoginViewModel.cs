@@ -6,13 +6,15 @@ namespace Darts.Models.ViewModels.AccountViewModels
     {
         [Required]
         [EmailAddress]
+        [Display(Name ="Gebruikersnaam")]
         public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [Display(Name ="Wachtwoord")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Onthouden?")]
         public bool RememberMe { get; set; }
     }
 }
