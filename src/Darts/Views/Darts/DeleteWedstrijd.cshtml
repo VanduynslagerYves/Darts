@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] ="Verwijderen van wedstrijd";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>
+    Ben je zeker dat je de wedstrijd gespeeld op @ViewData["Datum"] wilt verwijderen?
+</h4>
+<form asp-action="DeleteWedstrijd" method="post">
+    <div>
+        <button class="btn btn-primary" type="submit">Opslaan</button>
+        <a asp-action="Index" class="btn btn-default">Annuleren</a>
+    </div>
+</form>

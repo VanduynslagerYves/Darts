@@ -8,7 +8,7 @@ namespace Darts.Models.Domain
     public interface IWedstrijdRepository
     {
         ICollection<Wedstrijd> GetAll();
-        ICollection<Wedstrijd> GetById(int id);
+        Wedstrijd GetById(int id);
         ICollection<Wedstrijd> GetBySpeler(Speler speler);
 
         void Add(Wedstrijd wedstrijd);

@@ -82,7 +82,8 @@ namespace Darts.Data
             m.HasMany(t => t.SpelerWedstrijd)
                 .WithOne()
                 .IsRequired()
-                .HasForeignKey(t => t.WedstrijdId);
+                .HasForeignKey(t => t.WedstrijdId)
+                .OnDelete(DeleteBehavior.Cascade);
             //m.HasOne(t => t.Speler1)
             //    .WithMany()
             //    .IsRequired()

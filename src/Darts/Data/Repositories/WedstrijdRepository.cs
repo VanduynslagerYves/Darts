@@ -18,29 +18,21 @@ namespace Darts.Data.Repositories
             _wedstrijden = _dbContext.Wedstrijden;
         }
 
-        ICollection<Wedstrijd> IWedstrijdRepository.GetAll()
+        public ICollection<Wedstrijd> GetAll()
         {
             return _wedstrijden
-                //.Include(w => w.Speler1)
-                //.Include(w => w.Speler2)
                 .ToList();
         }
 
-        ICollection<Wedstrijd> IWedstrijdRepository.GetById(int id)
+       public Wedstrijd GetById(int id)
         {
             return _wedstrijden
-                //.Include(w => w.Speler1)
-                //.Include(w => w.Speler2)
-                .Where(w => w.Id == id)
-                .ToList();
+                .SingleOrDefault(w => w.Id == id);
         }
 
-        ICollection<Wedstrijd> IWedstrijdRepository.GetBySpeler(Speler speler)
+        public ICollection<Wedstrijd> GetBySpeler(Speler speler)
         {
             return _wedstrijden
-                //.Include(w => w.Speler1)
-                //.Include(w => w.Speler2)
-                //.Where(w => w.Speler1.Equals(speler))
                 .ToList();
         }
 

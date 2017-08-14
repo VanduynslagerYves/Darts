@@ -177,6 +177,35 @@ namespace Darts.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Policy ="AdminOnly")]
+        public IActionResult DeleteWedstrijd(int id)
+        {
+            Wedstrijd w = _wedstrijdRepository.GetById(id);
+            if (w == null)
+                return NotFound();
+            ViewData["Datum"] = w.DatumGespeeld;
+            return View();
+        }
+
+        [HttpPost, ActionName("DeleteWedstrijd")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy ="AdminOnly")]
+        public IActionResult DeleteWedstrijdConfirmed(int id)
+        {
+            Wedstrijd wedstrijd = null;
+            try
+            {
+                wedstrijd = _wedstrijdRepository.GetById(id);
+                _wedstrijdRepository.Remove(wedstrijd);
+                _spelerRepository.SaveChanges();
+                TempData["message"] = $"De wedstrijd van {wedstrijd.DatumGespeeld} werd succesvol verwijderd!";
+            }
+            catch
+            {
+                TempData["error"] = $"Er ging iets verkeerd, de wedstrijd van {wedstrijd.DatumGespeeld} werd niet verwijderd";
+            }
+            return RedirectToAction(nameof(Index));
+        }
         public IActionResult Spelers()
         {
             return View(_spelerRepository.GetAll());
