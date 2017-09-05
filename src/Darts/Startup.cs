@@ -45,8 +45,11 @@ namespace Darts
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Cookies.ApplicationCookie.AccessDeniedPath = new PathString("/Darts/Index");
-                options.Password.RequiredLength = 8;
+                options.Password.RequiredLength = 6;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
