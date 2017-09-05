@@ -17,7 +17,7 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top ">
+    <nav class="navbar navbar-inverse navbar-fixed-top shadow ">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -38,7 +38,7 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="container body-content shadow">
         @if (TempData["message"] != null) {
             <div class="alert alert-success">@TempData["message"]</div>
         }

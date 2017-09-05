@@ -1,4 +1,5 @@
 ﻿body {
+    margin-top: 5px;
     padding-top: 50px;
     padding-bottom: 20px;
     height:100%;
@@ -7,14 +8,19 @@
 .body-content{
     width: 75%;
     background-color: lightsteelblue;
-    border-radius:15px;
+    /*border-radius:15px;*/
 }
 
 .navbar {
     background-color: steelblue;
-    border-radius: 15px;
+    /*border-radius: 15px;*/
     width: 75%;
     margin: 0 auto;
+}
+
+.shadow
+{
+    box-shadow: 5px 5px 0 5px black;
 }
 
 /*navbar header (bootstrap override)*/

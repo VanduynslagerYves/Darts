@@ -206,6 +206,12 @@ namespace Darts.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult Info()
+        {
+            return View();
+        }
         public IActionResult Spelers()
         {
             return View(_spelerRepository.GetAll());
