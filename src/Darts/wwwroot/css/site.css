@@ -18,9 +18,8 @@
     margin: 0 auto;
 }
 
-.shadow
-{
-    box-shadow: 5px 5px 0 5px black;
+.shadow {
+    box-shadow: #000 3px 3px 6px 1px;
 }
 
 /*navbar header (bootstrap override)*/
