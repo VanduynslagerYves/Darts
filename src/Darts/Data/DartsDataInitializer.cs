@@ -23,22 +23,16 @@ namespace Darts.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
-                string eMailAddress = "yves.vanduynslager@telenet.be";
+                string eMailAddress = "dorine.warnez@gmail.be";
                 ApplicationUser user = new ApplicationUser { UserName = eMailAddress, Email = eMailAddress };
-                await _userManager.CreateAsync(user, "P@ssword1");
+                await _userManager.CreateAsync(user, "YvesNick63142");
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "admin"));
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "speler"));
 
-                eMailAddress = "jan@hogent.be";
+                eMailAddress = "speler@darts.be";
                 user = new ApplicationUser { UserName = eMailAddress, Email = eMailAddress };
-                await _userManager.CreateAsync(user, "P@ssword1");
+                await _userManager.CreateAsync(user, "Darts123");
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "speler"));
-
-                eMailAddress = "dartsmaster@telenet.be";
-                user = new ApplicationUser { UserName = eMailAddress, Email = eMailAddress };
-                await _userManager.CreateAsync(user, "P@ssword1");
-                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "speler"));
-
 
                 //SpelerWedstrijden adden aan context, met speler en wedstrijd
                 //SpelerWedstrijd(speler 1 dan 2, zelfde wedstrijd)
