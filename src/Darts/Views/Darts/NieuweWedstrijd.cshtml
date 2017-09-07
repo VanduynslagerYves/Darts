@@ -18,20 +18,18 @@
         <select asp-for="IdSpeler1" asp-items="@(ViewData["Spelers"] as SelectList)" class="form-control">
             <option value="">-- Kies een speler --</option>
         </select>
-        <span asp-validation-for="IdSpeler2" class="text-danger"></span>
+        <span asp-validation-for="IdSpeler1" class="text-danger"></span>
+        <br/>
+        <label asp-for="PuntenGewonnen"></label>
+        <input asp-for="PuntenGewonnen" class="form-control" />
+        <span asp-validation-for="PuntenGewonnen" class="text-danger"></span>
     </div>
-    <div>
+    <div class="form-group">
         <label asp-for="IdSpeler2"></label>
         <select asp-for="IdSpeler2" asp-items="@(ViewData["Spelers"] as SelectList)" class="form-control">
             <option value="">-- Kies een speler --</option>
         </select>
         <span asp-validation-for="IdSpeler2" class="text-danger"></span>
-    </div>
-    <br />
-    <div>
-        <label asp-for="PuntenGewonnen"></label>
-        <input asp-for="PuntenGewonnen" class="form-control"/>
-        <span asp-validation-for="PuntenGewonnen" class="text-danger"></span>
     </div>
     <br />
     <div>

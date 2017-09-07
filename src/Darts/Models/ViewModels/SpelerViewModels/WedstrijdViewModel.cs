@@ -13,19 +13,19 @@ namespace Darts.Models.ViewModels.SpelerViewModels
         {
             DatumGespeeld = DateTime.Now;
         }
-        [Display(Name = "Punten van Speler1")]
+        [Display(Name = "Punten van de speler")]
         [Range(0, 3, ErrorMessage = "{0} moeten tussen {1} en {2} liggen!")]
         public int PuntenGewonnen { get; set; }
         public int PuntenVerloren => 3 - PuntenGewonnen;
-        [Display(Name ="Tijdstip gespeeld")]
+        [Display(Name ="Datum gespeeld")]
         [DataType(DataType.Date)]
         [Required]
         public DateTime DatumGespeeld { get; set; }
-        [Required]
-        [Display(Name ="Speler 1")]
+        [Required(ErrorMessage = "Je moet een speler selecteren!")]
+        [Display(Name ="Speler")]
         public int IdSpeler1 { get; set; }
-        [Required]
-        [Display(Name ="Speler 2")]
+        [Required(ErrorMessage = "Je moet een tegenstander selecteren!")]
+        [Display(Name ="Tegenstander")]
         public int IdSpeler2 { get; set; }
     }
 }
