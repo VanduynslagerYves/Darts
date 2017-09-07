@@ -9,6 +9,10 @@ namespace Darts.Models.ViewModels.SpelerViewModels
 {
     public class WedstrijdViewModel
     {
+        public WedstrijdViewModel()
+        {
+            DatumGespeeld = DateTime.Now;
+        }
         [Display(Name = "Punten van Speler1")]
         [Range(0, 3, ErrorMessage = "{0} moeten tussen {1} en {2} liggen!")]
         public int PuntenGewonnen { get; set; }
