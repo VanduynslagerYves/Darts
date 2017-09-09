@@ -7,7 +7,6 @@ namespace Darts.Models.Domain
     {
         #region Properties
         public int Id { get; set; }
-        public string Email { get; set; }
         public string Naam { get; set; }
         public string Voornaam { get; set; }
         public string VolledigeNaam => Naam + " " + Voornaam;
@@ -19,9 +18,8 @@ namespace Darts.Models.Domain
         #endregion
 
         #region Constructors
-        public Speler(string email, string voornaam, string naam) : this()
+        public Speler(string voornaam, string naam) : this()
         {
-            Email = email;
             Naam = naam;
             Voornaam = voornaam;
         }

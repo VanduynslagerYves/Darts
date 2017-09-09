@@ -20,10 +20,6 @@ namespace Darts.Data.Repositories
         {
             return _spelers.Include(s => s.SpelerWedstrijd).SingleOrDefault(s => s.Id == id);
         }
-        public Speler GetBy(string email)
-        {
-            return _spelers.Include(s => s.SpelerWedstrijd).SingleOrDefault(s => s.Email == email);
-        }
         public void Add(Speler speler)
         {
             _spelers.Add(speler);

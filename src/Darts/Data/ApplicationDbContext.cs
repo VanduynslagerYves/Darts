@@ -44,9 +44,6 @@ namespace Darts.Data
             c.Property(t => t.Voornaam)
                 .IsRequired()
                 .HasMaxLength(100);
-            c.Property(t => t.Email)
-                .IsRequired()
-                .HasMaxLength(100);
 
             c.HasMany(t => t.SpelerWedstrijd)
                 .WithOne()

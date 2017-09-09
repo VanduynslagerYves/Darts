@@ -12,8 +12,9 @@
     <div class="col-md-12">
         <section>
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
-                <h4>Gebruik de gebruikersnaam en wachtwoord die te vinden zijn op de facebookpagina: ...</h4>
-                <hr />
+                <h4>Gebruik de gebruikersnaam en wachtwoord die te vinden zijn op de 
+                <a href="https://www.facebook.com/groups/1638202866468172/" target="_blank">darts facebookpagina</a></h4>
+                <br />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Email" class="col-md-2 control-label"></label>

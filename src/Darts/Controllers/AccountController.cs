@@ -120,7 +120,6 @@ namespace Darts.Controllers
                 {
                     var speler = new Speler
                     {
-                        Email = model.Email,
                         Naam = model.Name,
                         Voornaam = model.FirstName
                         //Street = model.Street,

@@ -235,7 +235,7 @@ namespace Darts.Controllers
         private void MapSpelerEditViewModelToSpeler(EditViewModel spelerEditViewModel, Speler speler)
         {
             speler.Naam = spelerEditViewModel.Naam;
-            speler.Email = spelerEditViewModel.Email;
+            //speler.Email = spelerEditViewModel.Email;
             speler.Voornaam = spelerEditViewModel.Voornaam;
         }
     }

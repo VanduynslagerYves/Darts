@@ -41,13 +41,13 @@ namespace Darts.Models.ViewModels.SpelerViewModels
         //{
         //    get; set;
         //}
-        [Display(Name = "E-mailadres")]
-        [DataType(DataType.EmailAddress)]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Dit is geen geldig e-mailadres")]
-        public string Email
-        {
-            get; set;
-        }
+        //[Display(Name = "E-mailadres")]
+        //[DataType(DataType.EmailAddress)]
+        //[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Dit is geen geldig e-mailadres")]
+        //public string Email
+        //{
+        //    get; set;
+        //}
         //[Display(Name = "Date established")]
         //[DataType(DataType.Date)]
         //public DateTime? DateEstablished
@@ -64,7 +64,7 @@ namespace Darts.Models.ViewModels.SpelerViewModels
             SpelerId = speler.Id;
             Voornaam = speler.Voornaam;
             Naam = speler.Naam;
-            Email = speler.Email;
+            //Email = speler.Email;
         }
     }
 }
