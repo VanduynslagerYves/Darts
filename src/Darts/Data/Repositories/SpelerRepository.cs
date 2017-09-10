@@ -39,6 +39,7 @@ namespace Darts.Data.Repositories
         {
             return _spelers
                 .Include(s => s.SpelerWedstrijd)
+                .OrderByDescending(s => s.TotaalPunten)
                 .ToList();
 
         }

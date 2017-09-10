@@ -153,7 +153,7 @@ namespace Darts.Controllers
             Speler speler = _spelerRepository.GetById(id);
             if (speler == null)
                 return NotFound();
-            ViewData[nameof(Speler.Naam)] = speler.Naam;
+            ViewData["Name"] = speler.Naam;
             return View();
         }
 

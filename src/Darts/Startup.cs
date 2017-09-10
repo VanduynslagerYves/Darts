@@ -69,12 +69,12 @@ namespace Darts
             services.AddScoped<IWedstrijdRepository, WedstrijdRepository>();
             services.AddScoped<ISpelerRepository, SpelerRepository>();
             services.AddScoped<ISpelerWedstrijdRepository, SpelerWedstrijdRepository>();
-            services.AddScoped<DartsDataInitializer>();
+            //services.AddScoped<DartsDataInitializer>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DartsDataInitializer dataInit)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory/*, DartsDataInitializer dataInit*/)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -104,7 +104,7 @@ namespace Darts
                     template: "{controller=Darts}/{action=Index}/{id?}");
             });
 
-            dataInit.InitializeData().Wait();
+            //dataInit.InitializeData().Wait();
         }
     }
 }
